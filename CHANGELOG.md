@@ -1,4 +1,16 @@
 <!-- header goes here -->
+## [0.0.2](https://github.com/kristof-mattei/axum-schemars/compare/v0.0.1..v0.0.2) - 2026-05-07
+
+### 🐛 Bug Fixes
+
+- Spellcheck by [@kristof-mattei](https://github.com/kristof-mattei) ([`c07673b`](https://github.com/kristof-mattei/axum-schemars/commit/c07673b19d6330647626cd020f0a2afacbe0e0c9))
+- Ignore old, invalid commits by [@kristof-mattei](https://github.com/kristof-mattei) ([`2387c23`](https://github.com/kristof-mattei/axum-schemars/commit/2387c2312449752c08b6d5ee752a6470b7c181ca))
+- Fake example to make the build work by [@kristof-mattei](https://github.com/kristof-mattei) ([`8c46547`](https://github.com/kristof-mattei/axum-schemars/commit/8c46547e4c9ee796dc426f4e91e77b123ad728ba))
+
+### ⚙️ Miscellaneous Tasks
+
+- Fake test by [@kristof-mattei](https://github.com/kristof-mattei) ([`6ec9f69`](https://github.com/kristof-mattei/axum-schemars/commit/6ec9f692fc7eb155773ca02c5f26949144036170))
+- Allow without use by [@kristof-mattei](https://github.com/kristof-mattei) ([`65c67fe`](https://github.com/kristof-mattei/axum-schemars/commit/65c67fea637d11b0bc87e0614ea5c48b835d49ca))
 ## [0.0.1] - 2026-05-07
 
 ### 🚀 Features
