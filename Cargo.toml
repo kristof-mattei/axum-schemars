@@ -12,7 +12,7 @@ repository = "https://github.com/kristof-mattei/axum-schema-rs"
 include = ["src/**", "/LICENSE", "/LICENSE-*"]
 readme = "README.md"
 
-[metadata.spellcheck]
+[package.metadata.spellcheck]
 config = "spellcheck.toml"
 
 [features]
