@@ -6,10 +6,10 @@
     "rust-analyzer.cargo.extraEnv": {
         // "RUSTC_BOOTSTRAP": "1"
     },
-    "rust-analyzer.cargo.features": [],
+    "rust-analyzer.cargo.features": "all",
     "rust-analyzer.runnables.extraEnv": {
         // "RUSTC_BOOTSTRAP": "1",
-        "RUST_LOG": "DEBUG,AXUM_SCHEMARS=TRACE"
+        "RUST_LOG": "DEBUG,axum_schemars=TRACE"
     },
     "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
     "rust-analyzer.server.extraEnv": {}

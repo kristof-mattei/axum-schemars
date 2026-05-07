@@ -205,7 +205,10 @@ impl IntoResponse for JsonSchemaRejection {
 
 #[cfg(feature = "aide")]
 mod impl_aide {
-    use super::{Json, JsonSchema};
+    use aide::openapi::StatusCode;
+    use schemars::JsonSchema;
+
+    use super::Json;
 
     impl<T> aide::OperationInput for Json<T>
     where
@@ -235,7 +238,7 @@ mod impl_aide {
         fn inferred_responses(
             ctx: &mut aide::generate::GenContext,
             operation: &mut aide::openapi::Operation,
-        ) -> Vec<(Option<u16>, aide::openapi::Response)> {
+        ) -> Vec<(Option<StatusCode>, aide::openapi::Response)> {
             axum::Json::<T>::inferred_responses(ctx, operation)
         }
     }
