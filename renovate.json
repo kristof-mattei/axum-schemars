@@ -3,7 +3,6 @@
     "extends": [
         "github>kristof-mattei/renovate-config",
         "github>kristof-mattei/renovate-config//github-actions/nonSemver",
-        "github>kristof-mattei/renovate-config//rust/updateRustVersionInCargoToml",
-        "github>kristof-mattei/renovate-config//rust/updateChannelInRustToolchainToml"
+        "local>kristof-mattei/hyper-unix-socket//renovate-dont-update-cargo"
     ]
 }
