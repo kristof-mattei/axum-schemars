@@ -104,7 +104,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "axum-jsonschema"
+name = "axum-schemars"
 version = "0.0.0-development"
 dependencies = [
  "aide",
