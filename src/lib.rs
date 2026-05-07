@@ -205,7 +205,7 @@ impl IntoResponse for JsonSchemaRejection {
 
 #[cfg(feature = "aide")]
 mod impl_aide {
-    use super::*;
+    use super::{Json, JsonSchema};
 
     impl<T> aide::OperationInput for Json<T>
     where
@@ -227,9 +227,9 @@ mod impl_aide {
 
         fn operation_response(
             ctx: &mut aide::generate::GenContext,
-            op: &mut aide::openapi::Operation,
+            operation: &mut aide::openapi::Operation,
         ) -> Option<aide::openapi::Response> {
-            axum::Json::<T>::operation_response(ctx, op)
+            axum::Json::<T>::operation_response(ctx, operation)
         }
 
         fn inferred_responses(
