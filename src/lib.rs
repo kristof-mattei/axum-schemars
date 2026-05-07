@@ -13,26 +13,23 @@
 //!
 //! - aide: support for [aide](https://docs.rs/aide/latest/aide/)
 
-#![warn(clippy::pedantic, missing_docs)]
-#![allow(clippy::wildcard_imports)]
-use std::{
-    any::{type_name, TypeId},
-    cell::RefCell,
-    collections::{HashMap, VecDeque},
-};
+use std::any::{TypeId, type_name};
+use std::cell::RefCell;
+use std::collections::VecDeque;
 
-use axum::{
-    body::Body,
-    extract::{rejection::JsonRejection, FromRequest},
-    response::IntoResponse,
-};
+use axum::body::Body;
+use axum::extract::FromRequest;
+use axum::extract::rejection::JsonRejection;
+use axum::response::IntoResponse;
+use hashbrown::HashMap;
 use http::{Request, StatusCode};
-use itertools::Itertools;
+use itertools::Itertools as _;
 use jsonschema::{Evaluation, Validator};
 use schemars::generate::SchemaSettings;
 use schemars::{JsonSchema, SchemaGenerator};
-use serde::{de::DeserializeOwned, Serialize};
-use serde_json::{Map, Value};
+use serde::Serialize;
+use serde::de::DeserializeOwned;
+use serde_json::{Map, Value as JsonValue};
 use serde_path_to_error::Segment;
 
 /// Wrapper type over [`axum::Json`] that validates
@@ -49,7 +46,7 @@ where
 
     /// Perform the extraction.
     async fn from_request(req: Request<Body>, state: &S) -> Result<Self, Self::Rejection> {
-        let value: Value = axum::Json::from_request(req, state)
+        let value: JsonValue = axum::Json::from_request(req, state)
             .await
             .map_err(JsonSchemaRejection::Json)?
             .0;
@@ -64,7 +61,7 @@ where
                             type_name = type_name::<T>(),
                             "invalid JSON schema for type"
                         );
-                        jsonschema::validator_for(&Value::Object(Map::default())).unwrap()
+                        jsonschema::validator_for(&JsonValue::Object(Map::default())).unwrap()
                     })
             });
 
@@ -164,16 +161,16 @@ impl From<JsonSchemaRejection> for JsonSchemaErrorResponse {
                 extra: AdditionalError::Json,
             },
             JsonSchemaRejection::Serde(s) => Self {
-                error: "deserialization failed".to_string(),
+                error: "deserialization failed".to_owned(),
                 extra: AdditionalError::Deserialization(DeserializationResponse {
                     deserialization_error: VecDeque::from([PathError {
                         // keys and index separated by a '/'
                         // enum is ignored because it doesn't exist in json
                         instance_location: std::iter::once(String::new())
-                            .chain(s.path().iter().map(|s| match s {
-                                Segment::Map { key } => key.to_string(),
+                            .chain(s.path().iter().map(|s| match *s {
+                                Segment::Map { ref key } => key.to_owned(),
                                 Segment::Seq { index } => index.to_string(),
-                                _ => "?".to_string(),
+                                Segment::Enum { .. } | Segment::Unknown => "?".to_owned(),
                             }))
                             .join("/"),
                         keyword_location: None,
@@ -182,13 +179,13 @@ impl From<JsonSchemaRejection> for JsonSchemaErrorResponse {
                 }),
             },
             JsonSchemaRejection::Schema(s) => Self {
-                error: "request schema validation failed".to_string(),
+                error: "request schema validation failed".to_owned(),
                 extra: AdditionalError::Schema(SchemaResponse {
                     schema_validation: s
                         .iter_errors()
                         .map(|v| PathError {
                             instance_location: v.instance_location.to_string(),
-                            keyword_location: v.absolute_keyword_location.map(|it| it.to_string()),
+                            keyword_location: v.absolute_keyword_location.map(ToString::to_string),
                             error: v.error.to_string(),
                         })
                         .collect(),

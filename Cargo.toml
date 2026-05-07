@@ -23,6 +23,7 @@ aide = { version = "0.15", optional = true, default-features = false, features =
     "axum-json",
 ] }
 axum = { version = "0.8", default-features = false, features = ["json"] }
+hashbrown = { version = "0.17.0", default-features = false, features = ["default-hasher", "inline-more"] }
 http = "1.0.0"
 itertools = "0.14.0"
 jsonschema = { version = "0.37.1", default-features = false }
