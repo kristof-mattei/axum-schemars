@@ -28,7 +28,7 @@ hashbrown = { version = "0.17.0", default-features = false, features = [
     "inline-more",
 ] }
 http = "1.0.0"
-itertools = "0.14.0"
+itertools = "0.15.0"
 jsonschema = { version = "0.46.4", default-features = false }
 schemars = { version = "1.2.1", default-features = false }
 serde = { version = "1", features = ["derive"] }
